@@ -4,7 +4,7 @@
       :title="title"
       :visible="visible"
       @cancel="() => { $emit('cancel') }"
-      @ok="hideModal"
+      @ok="handleConfirm"
       width="800px"
       okText="确认"
       cancelText="取消">
@@ -40,15 +40,19 @@ export default {
     rowSelection: Object,
     rowKey: String,
     columns: Array,
+    // 是否多选
     multiple: {
       type: Boolean,
       default: true,
     },
+    // 是否打开
     visible: {
       type: Boolean,
       default: false,
     },
+    // 标题
     title: String,
+    // 获取数据的接口地址
     action: String,
   },
   data() {
@@ -67,10 +71,10 @@ export default {
   },
   watch: {
     visible(val) {
+      this.selectedRowKeys = [];
       // 打开时，搜索数据
       if (val) {
         this.fetchData({ current: this.current });
-        // this.selectedRowKeys = this.rowSelection.selectedRowKeys;
       }
     },
   },
@@ -128,10 +132,7 @@ export default {
       });
     },
 
-    // handlePageChange({ current, pageSize }, filters, sorter) {
-    //   this.$emit('change', { current, pageSize }, filters, sorter);
-    // },
-    hideModal() {
+    handleConfirm() {
       this.$emit('confirm', this.selectedRowKeys, this.records);
     },
     onSelectChange(selectedRowKeys, records) {

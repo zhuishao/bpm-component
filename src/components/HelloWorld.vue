@@ -2,7 +2,7 @@
  * @Author: ningbo.kang
  * @Date: 2020-01-13 15:20:02
  * @LastEditors  : ningbo.kang
- * @LastEditTime : 2020-01-13 17:37:55
+ * @LastEditTime : 2020-01-13 17:55:49
  * @Description: 描述
  -->
 <template>
@@ -18,7 +18,6 @@
       action="http://rap2api.taobao.org/app/mock/232772/demo/list/tableList/getServiceList"
       @cancel="handleCancel"
       @confirm="handleConfirm"
-      :rowSelection="{selectedRowKeys: ['1','4']}"
       rowKey="key"></ec-button-modal-box>
   </div>
 </template>
