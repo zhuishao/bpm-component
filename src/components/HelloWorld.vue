@@ -1,254 +1,89 @@
+<!--
+ * @Author: ningbo.kang
+ * @Date: 2020-01-13 15:20:02
+ * @LastEditors  : ningbo.kang
+ * @LastEditTime : 2020-01-13 17:37:55
+ * @Description: 描述
+ -->
 <template>
   <div class="hello">
-    <a-button type="primary" @click="showModal">
+    <a-button type="primary"
+      @click="showModal">
       选择商铺
     </a-button>
-    <ec-button-modal-box
-            modalClass="large-modal"
-            title="一个名字"
-            :pagination="pagination"
-            :visible="visible"
-            :columns="columns"
-            :dataSource="list"
-            @cancel="handleCancel"
-            @confirm="handleConfirm"
-            @search="onSearch"
-            @change="handlePageChange"
-            :rowSelection="{selectedRowKeys: ['1','4']}"
-            rowKey="xdsn"
-    ></ec-button-modal-box>
+    <ec-button-modal-box title="一个名字"
+      :visible="visible"
+      :columns="columns"
+      :multiple="true"
+      action="http://rap2api.taobao.org/app/mock/232772/demo/list/tableList/getServiceList"
+      @cancel="handleCancel"
+      @confirm="handleConfirm"
+      :rowSelection="{selectedRowKeys: ['1','4']}"
+      rowKey="key"></ec-button-modal-box>
   </div>
 </template>
 
 <script>
-import EcButtonModalBox from "./ecButtonModalBox/ecButtonModalBox";
+import EcButtonModalBox from './ecButtonModalBox/ecButtonModalBox';
 export default {
   name: 'HelloWorld',
-  components: {EcButtonModalBox},
-  data(){
+  components: { EcButtonModalBox },
+  data() {
     const columns = [
       {
         title: '序号',
         align: 'center',
         width: 70,
-        customRender: (text, record, index) => (this.pageNum - 1) * this.pageSize + index + 1,
       },
       {
         title: '问题主题',
         dataIndex: 'subject',
       },
       {
-        title: 'AAAAAAAAAAAA',
-        dataIndex: 'A',
+        title: 'No',
+        dataIndex: 'no',
       },
       {
-        title: 'B',
-        dataIndex: 'B',
+        title: 'description',
+        dataIndex: 'description',
       },
       {
-        title: 'C',
-        dataIndex: 'C',
+        title: 'updatedAt',
+        dataIndex: 'updatedAt',
       },
       {
-        title: 'D',
-        dataIndex: 'D',
+        title: 'editable',
+        dataIndex: 'editable',
       },
       {
         title: 'XDSN号',
         dataIndex: 'xdsn',
       },
     ];
-    const dataSource = [
-      {
-        subject: 'a',
-        xdsn: '1',
-        A: '1',
-        B: 'B',
-        C: '1',
-        D: 'B',
-      },
-      {
-        subject: 'b',
-        xdsn: '2',
-        A: '1',
-        B: 'B',
-        C: '1',
-        D: 'B',
-      },
-      {
-        subject: 'c',
-        xdsn: '3',
-        A: '1',
-        B: 'B',
-        C: '1',
-        D: 'B',
-      },
-      {
-        subject: 'd',
-        xdsn: '4',
-        A: '1',
-        B: 'B',
-        C: '1',
-        D: 'B',
-      },
-      {
-        subject: 'e',
-        xdsn: '5',
-        A: '1',
-        B: 'B',
-        C: '1',
-        D: 'B',
-      },
-      {
-        subject: 'e',
-        xdsn: '6',
-        A: '1',
-        B: 'B',
-        C: '1',
-        D: 'B',
-      },
-      {
-        subject: 'e',
-        xdsn: '7',
-        A: '1',
-        B: 'B',
-        C: '1',
-        D: 'B',
-      },
-      {
-        subject: 'e',
-        xdsn: '8',
-        A: '1',
-        B: 'B',
-        C: '1',
-        D: 'B',
-      },
-      {
-        subject: 'e',
-        xdsn: '9',
-        A: '1',
-        B: 'B',
-        C: '1',
-        D: 'B',
-      },
-      {
-        subject: 'e',
-        xdsn: '10',
-        A: '1',
-        B: 'B',
-        C: '1',
-        D: 'B',
-      },
-      {
-        subject: 'e',
-        xdsn: '11',
-        A: '1',
-        B: 'B',
-        C: '1',
-        D: 'B',
-      },
-      {
-        subject: 'e',
-        xdsn: '12',
-        A: '1',
-        B: 'B',
-        C: '1',
-        D: 'B',
-      },
-      {
-        subject: 'e',
-        xdsn: '13',
-        A: '1',
-        B: 'B',
-        C: '1',
-        D: 'B',
-      },
-      {
-        subject: 'e',
-        xdsn: '14',
-        A: '1',
-        B: 'B',
-        C: '1',
-        D: 'B',
-      },
-      {
-        subject: 'e',
-        xdsn: '15',
-        A: '1',
-        B: 'B',
-        C: '1',
-        D: 'B',
-      },
-      {
-        subject: 'e',
-        xdsn: '16',
-        A: '1',
-        B: 'B',
-        C: '1',
-        D: 'B',
-      },
 
-
-    ];
     return {
       columns,
-      dataSource,
-      list:dataSource,
       visible: false,
-      pageNum:1,
-      pageSize:10,
-      current:0,
       loading: false,
-      selectedRowKeys:[],
-    }
+      selectedRowKeys: [],
+    };
   },
-  props: {
-    msg: String
-  },
-  methods:{
+  methods: {
     showModal() {
       this.visible = true;
     },
     handleCancel() {
       this.visible = false;
     },
-    handleConfirm(selectRowkeys,record){
-     console.log(record);
-     this.visible = false;
+    handleConfirm(selectRowkeys, record) {
+      console.log(record);
+      this.visible = false;
     },
-    onSelectChange(records){
+    onSelectChange(records) {
       console.log(records);
     },
-    // 分页：翻页change
-    handlePageChange({ current, pageSize }, filters, sorter) {
-      this.pageSize = pageSize;
-      this.current = current;
-      const { order } = sorter;
-      if (order) {
-        sorter.order = order.replace('end', '');
-      }
-    },
-    onSearch(value){
-      console.log(value);
-      if(value.length!==0){
-        this.list = this.dataSource.filter(item => item.xdsn===value);
-      }else {
-        this.list = this.dataSource;
-      }
-    },
   },
-  computed: {
-    pagination() {
-      return {
-        total: this.total,
-        current: this.current,
-        showSizeChanger: true,
-        showQuickJumper: true,
-        change: 'handlePageChange',
-      };
-    },
-  }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
