@@ -2,7 +2,7 @@
  * @Author: ningbo.kang
  * @Date: 2020-01-13 15:20:02
  * @LastEditors  : ningbo.kang
- * @LastEditTime : 2020-01-13 17:55:49
+ * @LastEditTime : 2020-01-13 17:57:57
  * @Description: 描述
  -->
 <template>
@@ -75,7 +75,8 @@ export default {
       this.visible = false;
     },
     handleConfirm(selectRowkeys, record) {
-      console.log(record);
+      console.log('selectRowkeys', selectRowkeys);
+      console.log('record', record);
       this.visible = false;
     },
     onSelectChange(records) {

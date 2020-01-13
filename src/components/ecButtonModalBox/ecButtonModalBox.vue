@@ -12,6 +12,7 @@
         <a-input-search placeholder="请输入搜索内容"
           @search="onSearch"
           style="width:300px;"
+          allowClear
           enterButton />
       </div>
       <a-table style="margin-top:8px;"
