@@ -2,7 +2,7 @@
  * @Author: ningbo.kang
  * @Date: 2020-01-13 15:20:02
  * @LastEditors  : ningbo.kang
- * @LastEditTime : 2020-01-13 17:57:57
+ * @LastEditTime : 2020-01-14 11:14:09
  * @Description: 描述
  -->
 <template>
@@ -15,6 +15,7 @@
       :visible="visible"
       :columns="columns"
       :multiple="true"
+      :customRequest="myRequest"
       action="http://rap2api.taobao.org/app/mock/232772/demo/list/tableList/getServiceList"
       @cancel="handleCancel"
       @confirm="handleConfirm"
@@ -23,6 +24,7 @@
 </template>
 
 <script>
+import db from '@/api/db';
 import EcButtonModalBox from './ecButtonModalBox/ecButtonModalBox';
 export default {
   name: 'HelloWorld',
@@ -68,6 +70,16 @@ export default {
     };
   },
   methods: {
+    myRequest(param, cb) {
+      db.get('http://rap2api.taobao.org/app/mock/232772/demo/list/tableList/getServiceList', param)
+        .then(resp => {
+          const { list, total } = resp.page;
+          cb({ dataSource: list, total, loading: false });
+        })
+        .catch(() => {
+          cb({ dataSource: [], total: 0, loading: false });
+        });
+    },
     showModal() {
       this.visible = true;
     },

@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import db from '@/api/db';
+// import db from '@/api/db';
 
 export default {
   name: 'ecButtonModalBox',
@@ -55,6 +55,11 @@ export default {
     title: String,
     // 获取数据的接口地址
     action: String,
+
+    customRequest: {
+      type: Function,
+      default: () => {},
+    },
   },
   data() {
     return {
@@ -103,21 +108,35 @@ export default {
       this.query.version = this.version;
       this.loading = true;
 
-      db.get(this.action, {
-        pageNum: current,
-        pageSize,
-        sort,
-        ...query,
-      })
-        .then(resp => {
-          const { list, total } = resp.page;
-          this.dataSource = list;
+      this.customRequest(
+        {
+          pageNum: current,
+          pageSize,
+          sort,
+          ...query,
+        },
+        ({ dataSource, total, loading }) => {
+          this.dataSource = dataSource;
           this.total = total;
-          this.loading = false;
-        })
-        .catch(() => {
-          this.loading = false;
-        });
+          this.loading = loading;
+        }
+      );
+
+      // db.get(this.action, {
+      //   pageNum: current,
+      //   pageSize,
+      //   sort,
+      //   ...query,
+      // })
+      //   .then(resp => {
+      //     const { list, total } = resp.page;
+      //     this.dataSource = list;
+      //     this.total = total;
+      //     this.loading = false;
+      //   })
+      //   .catch(() => {
+      //     this.loading = false;
+      //   });
     },
 
     handlePageChange({ current, pageSize }, filters, sorter) {
